@@ -6,31 +6,48 @@ def day04part1(filename):
             elf1 = elves[0]
             elf2 = elves[1]
             left_elf = elf1.split('-')
+            elflb = int(left_elf[0])
+            elfle = int(left_elf[1])
             right_elf = elf2.split('-')
-            print('left_elf[0]:', left_elf[0])
-            print('right_elf[0]:', right_elf[0])
-            print('left_elf[1]:', left_elf[1])
-            print('right_elf[1]:', right_elf[1])
-            if (left_elf[0] <= right_elf[0] and left_elf[1] >= right_elf[1]):
-                print('left contains right:', line.strip())
-                print('left:', 12 <= 6)
-                print('right:', 12 >= 12)
-                print('left_elf[0] <= right_elf[0]:', left_elf[0] <= right_elf[0])
-                print('left_elf[1] >= right_elf[1]:', left_elf[1] >= right_elf[1])
+            elfrb = int(right_elf[0])
+            elfre = int(right_elf[1])
+            if (elflb <= elfrb) and (elfle >= elfre):
                 contained_count += 1
-            elif (left_elf[0] >= right_elf[0] and left_elf[1] <= right_elf[1]):
-                print('right contains left:', line.strip())
-                print('left_elf[0] >= right_elf[0]:', left_elf[0] >= right_elf[0])
-                print('left_elf[1] <= right_elf[1]:', left_elf[1] <= right_elf[1])
+            elif (elflb >= elfrb) and (elfle <= elfre):
                 contained_count += 1
     return contained_count
 
+def day04part2(filename):
+    overlap_count = 0
+    with open(filename) as file:
+        for line in file:
+            elves = line.strip().split(',')
+            elf1 = elves[0]
+            elf2 = elves[1]
+            left_elf = elf1.split('-')
+            elflb = int(left_elf[0])
+            elfle = int(left_elf[1])
+            right_elf = elf2.split('-')
+            elfrb = int(right_elf[0])
+            elfre = int(right_elf[1])
+            if (elflb <= elfrb) and (elfrb <= elfle):
+                overlap_count += 1
+            elif (elflb <= elfre) and (elfre <= elfle):
+                overlap_count += 1
+            elif (elfrb <= elflb) and (elflb <= elfre):
+                overlap_count += 1
+            elif (elfrb <= elfle) and (elfle <= elfre):
+                overlap_count += 1
+    return overlap_count
+
 def main():
     # filename = 'Day04/test.txt'
-    filename = 'Day04/test1.txt'
-    # filename = 'Day04/input.txt'
-    contained = day04part1(filename)
-    print('contained count:', contained),
+    # filename = 'Day04/test1.txt'
+    filename = 'Day04/input.txt'
+    # contained = day04part1(filename)
+    # print('contained count:', contained),
+    overlap = day04part2(filename)
+    print('overlap count:', overlap)
 
 if __name__ == '__main__':
     main()
